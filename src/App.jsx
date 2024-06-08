@@ -1,14 +1,19 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import {Link} from "react-router-dom";
+import HeaderPage from "./components/HeaderPage.jsx";
+import FooterPage from "./components/FooterPage.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
+        <HeaderPage />
+        <div className="home-options">
+            <Link to={"/login"} className={"home-op-start"}>START</Link>
+            <br/>
+            <Link to={"/scores/table"} className={"home-op-scores"}>SCORES</Link>
+        </div>
+        <FooterPage />
+      {/*<div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -27,7 +32,7 @@ function App() {
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
-      </p>
+      </p>*/}
     </>
   )
 }
