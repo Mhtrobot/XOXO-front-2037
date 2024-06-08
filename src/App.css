@@ -36,7 +36,7 @@ body{
   margin: 36px auto;
 }
 
-.home-options{
+.home-options, .login-form{
   margin: 36px auto;
   width: 195px;
   height: 358px;
@@ -64,4 +64,23 @@ footer{
   font-size: 20px;
   margin-top: 36px;
   color: var(--secondary);
+}
+
+.login-form p{
+  margin-top: 108px;
+}
+
+.login-form form input, .btn{
+  font-family: Poppins;
+  background-color: var(--primary);
+  width: 195px;
+  height: 30px;
+  border-radius: 10px;
+  margin-top: 18px;
+}
+
+.btn{
+  background-color: var(--secondary);
+  color: white;
+  border: none;
 }
