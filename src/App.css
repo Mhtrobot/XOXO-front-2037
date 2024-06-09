@@ -84,3 +84,58 @@ footer{
   background-color: var(--secondary);
   border: none;
 }
+
+body {
+  font: 14px 'Century Gothic', Futura, sans-serif;
+  margin: 20px;
+}
+
+ol, ul {
+  padding-left: 30px;
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.status {
+  margin-bottom: 10px;
+}
+
+.square {
+  background: #1C140F;
+  border-radius: 10px;
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  margin: 0 10px 10px 0;
+  padding: 0;
+  text-align: center;
+  width: 150px;
+  height: 150px;
+  color: #fff;
+}
+
+.game-board {
+  width: 500px;
+  height: 500px;
+  margin-left: 500px;
+}
+
+.game-info {
+  margin-left: 20px;
+}
+
+.stats p{
+  display: inline-block;
+  margin-right: 200px;
+  font-family: Poppins-bold;
+  font-size: 18px;
+}
+.stats{
+  align-items: center;
+  margin-left: 220px;
+}

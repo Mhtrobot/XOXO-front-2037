@@ -32,28 +32,28 @@ const Game = () => {
 
         const winner = calculateWinner(squares);
 
-        let status;
-        if (winner){
-            status = `Winner: ${winner}`;
-            sendResultsToServer(status)
-        }else
-            status = `Next Player: ${isXnext? 'X' : 'O'}`;
-
         const sendResultsToServer = async (winner)=>{
-            const user1Status = winner === 'X' ? 'WIN' : 'LOST';
-            const user2Status = winner === 'X' ? 'WIN' : 'LOST';
+            const user1Status = winner === 'X' ? 'WIN' : 'LOSE';
+            const user2Status = winner === 'X' ? 'WIN' : 'LOSE';
             const results = [
                 {username: user1, status: user1Status},
                 {username: user2, status: user2Status}
             ];
 
             try {
-                await axios.post('http://127.0.0.1:8000/update_score', results[0])
-                await axios.post('http://127.0.0.1:8000/update_score', results[1])
+                await axios.post('http://127.0.0.1:8000/update_score', {username: user1, status: user1Status})
+                await axios.post('http://127.0.0.1:8000/update_score', {username: user2, status: user2Status})
             }catch (error) {
                 console.log('Error sending results to the server: ', error)
             }
         }
+        let status;
+        if (winner){
+            status = `Winner: ${winner}`;
+            alert(status)
+            sendResultsToServer(status)
+        }else
+            status = `Next Player: ${isXnext? 'X' : 'O'}`;
 
         return (
             <div>
@@ -101,8 +101,13 @@ const Game = () => {
     return (
         <>
             <HeaderPage/>
-            <div className={'stats'}>player one: {user1}, player two: {user2}</div>
-            <Board />
+            <div className={'stats'}>
+                <p>X is: {user1}</p>
+                <p>O is: {user2}</p>
+            </div>
+            <div className="game-board">
+                <Board />
+            </div>
             <FooterPage/>
         </>
     )

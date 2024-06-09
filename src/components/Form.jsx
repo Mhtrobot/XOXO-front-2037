@@ -24,7 +24,7 @@ const Form = ({setIsLogged}) => {
         const result = await response.json();
         if (response.status === 200) {
             setIsLogged(true)
-            navigate('/games/tic-tac-toe', {state: {user1: user1, user2: user2}})
+            navigate('/games', {state: {user1: user1, user2: user2}})
         }
         else
             alert("Error! Either user 1 or 2 incorrect")
