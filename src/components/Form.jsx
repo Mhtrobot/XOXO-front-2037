@@ -1,8 +1,10 @@
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const Form = ({setIsLogged}) => {
     const [user1, setUser1] = useState('');
     const [user2, setUser2] = useState('');
+    const navigate = useNavigate();
     async function loginUser(e){
         e.preventDefault();
 
@@ -22,6 +24,7 @@ const Form = ({setIsLogged}) => {
         const result = await response.json();
         if (response.status === 200) {
             setIsLogged(true)
+            navigate('/games/tic-tac-toe', {state: {user1: user1, user2: user2}})
         }
         else
             alert("Error! Either user 1 or 2 incorrect")
