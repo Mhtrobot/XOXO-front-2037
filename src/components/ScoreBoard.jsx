@@ -21,7 +21,7 @@ const ScoreBoard = () => {
     return (
         <>
             <HeaderPage/>
-            <div className={'score-board'}>
+            <div className={'score-board-container'}>
                 <h3>SCORE TABLE(TOP 10)</h3>
                 <table className={'score-table'}>
                     <thead>
