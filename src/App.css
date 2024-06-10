@@ -146,6 +146,8 @@ ol, ul {
   color: white;
   padding: 20px;
   border-radius: 8px;
+  font-family: Poppins-bold;
+  font-size: 32px;
 }
 
 .score-board-container h2, .score-board-container h3 {
