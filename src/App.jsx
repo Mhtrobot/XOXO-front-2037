@@ -10,7 +10,7 @@ function App() {
         <div className="home-options">
             <Link to={"/login"} className={"home-op-start"}>START</Link>
             <br/>
-            <Link to={"/scores/table"} className={"home-op-scores"}>SCORES</Link>
+            <Link to={"/games/score-board"} className={"home-op-scores"}>SCORES</Link>
         </div>
         <FooterPage />
       {/*<div>

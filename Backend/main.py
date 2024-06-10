@@ -54,6 +54,10 @@ class gameResult(BaseModel):
 async def root():
     return {"message": "running"}
 
+@app.get('/sore-board')
+async def sore_board(db: Session = Depends(get_db)):
+    return db.query(models.PLAYER).order_by(models.PLAYER.total_score.desc()).all()
+
 @app.post("/login", response_model=bool)
 async def login(data: LoginData, db: Session = Depends(get_db)):
     isLogged_1 = db.query(models.PLAYER).filter(models.PLAYER.username == data.user1).first()

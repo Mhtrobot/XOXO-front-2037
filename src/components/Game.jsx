@@ -1,7 +1,7 @@
 import {useLocation} from "react-router-dom";
 import HeaderPage from "./HeaderPage.jsx";
 import FooterPage from "./FooterPage.jsx";
-import GameBoard from "./GameBoard.jsx";
+import ScoreBoard from "./ScoreBoard.jsx";
 import {useEffect, useState} from "react";
 import axios from "axios";
 
