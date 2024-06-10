@@ -2,19 +2,65 @@ import {useLocation} from "react-router-dom";
 import HeaderPage from "./HeaderPage.jsx";
 import FooterPage from "./FooterPage.jsx";
 import GameBoard from "./GameBoard.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
-const Game = () => {
-  const location = useLocation();
-  const {user1, user2} = location.state;
 
-    function Sqaure({value, onClick}){
+const Game = () => {
+    const location = useLocation();
+    const {user1, user2} = location.state;
+
+    function Sqaure({value, onClick}) {
         return <button className={'square'} onClick={onClick}>{value}</button>
     }
 
-    function Board(){
+    const sendResultsToServer = async (winner) => {
+        const user1Status = winner === 'X' ? 'WIN' : 'LOSE';
+        const user2Status = winner === 'O' ? 'WIN' : 'LOSE';
+        const results = [
+            {username: user1, status: user1Status},
+            {username: user2, status: user2Status}
+        ];
+
+        try {
+            const response = await fetch('http://127.0.0.1:8000/update_score', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(results[0])
+            })
+        } catch (error) {
+            console.log('Error sending results to the server: ', error)
+        }
+
+        try {
+            const response = await fetch('http://127.0.0.1:8000/update_score', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(results[1])
+            })
+        } catch (error) {
+            console.log('Error sending results to the server: ', error)
+        }
+    }
+
+    function Board() {
         const [squares, setSquares] = useState(Array(9).fill(null));
         const [isXnext, setIsXnext] = useState(true);
+        const [winner, setWinner] = useState('');
+        const [isResultSent, setIsResultSent] = useState(false)
+
+        useEffect(() => {
+            const winner = calculateWinner(squares);
+            if (winner && !isResultSent){
+                alert(`${winner} WINS!!!, Refresh the page for another round!`)
+                setWinner(winner)
+                setIsResultSent(true)
+                sendResultsToServer(winner)
+            }
+        }, [squares, isResultSent]);
 
         const handleClick = (index) => {
             const newSquare = squares.slice();
@@ -26,34 +72,15 @@ const Game = () => {
             setIsXnext(!isXnext)
         }
 
-        const renderSquare = (index)=>(
-            <Sqaure value={squares[index]} onClick={()=>handleClick(index)} />
+        const renderSquare = (index) => (
+            <Sqaure value={squares[index]} onClick={() => handleClick(index)}/>
         );
 
-        const winner = calculateWinner(squares);
-
-        const sendResultsToServer = async (winner)=>{
-            const user1Status = winner === 'X' ? 'WIN' : 'LOSE';
-            const user2Status = winner === 'X' ? 'WIN' : 'LOSE';
-            const results = [
-                {username: user1, status: user1Status},
-                {username: user2, status: user2Status}
-            ];
-
-            try {
-                await axios.post('http://127.0.0.1:8000/update_score', {username: user1, status: user1Status})
-                await axios.post('http://127.0.0.1:8000/update_score', {username: user2, status: user2Status})
-            }catch (error) {
-                console.log('Error sending results to the server: ', error)
-            }
-        }
         let status;
-        if (winner){
-            status = `Winner: ${winner}`;
-            alert(status)
-            sendResultsToServer(status)
-        }else
-            status = `Next Player: ${isXnext? 'X' : 'O'}`;
+        if (winner) {
+            status=`Winner: ${winner}`
+        } else
+            status = `Next Player: ${isXnext ? 'X' : 'O'}`;
 
         return (
             <div>
@@ -77,7 +104,7 @@ const Game = () => {
         );
     }
 
-    function calculateWinner(sqaures){
+    function calculateWinner(sqaures) {
         const lines = [
             [0, 1, 2],
             [3, 4, 5],
@@ -89,9 +116,9 @@ const Game = () => {
             [2, 4, 6]
         ];
 
-        for (let i=0; i<lines.length; i++){
-            const [a,b,c] = lines[i];
-            if (sqaures[a] && sqaures[a]===sqaures[b] && sqaures[a] === sqaures[c])
+        for (let i = 0; i < lines.length; i++) {
+            const [a, b, c] = lines[i];
+            if (sqaures[a] && sqaures[a] === sqaures[b] && sqaures[a] === sqaures[c])
                 return sqaures[a]
         }
 
@@ -106,7 +133,7 @@ const Game = () => {
                 <p>O is: {user2}</p>
             </div>
             <div className="game-board">
-                <Board />
+                <Board/>
             </div>
             <FooterPage/>
         </>
